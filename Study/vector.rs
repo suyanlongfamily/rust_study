@@ -1,42 +1,36 @@
-// use vec
-
+// use Vec
+// use std::vec::Vec;
+//设置编译器参数，禁用提示，
+// #![allow(unused_mut)] 
+#![allow(unused_variables)] 
+//#[warn(unused_variables)] on by default
+#![allow(dead_code)]
 fn main() {
     let mut v = vec![1, 2, 3, 4, 5, 62, 12, 34, 6];
+    //使用索引[]
+    v[1] += v[2];
+    v[2] = 100;
     for i in &v {
         println!("vector :{}", i);
     }
+    //另一种创建Ver对象的形式
+    let mut v_oth: Vec<i32> = std::vec::Vec::new(); //创建对象
+    // let k = v_oth.get(1);
+    // println!("{}",k);
 
-    {
-        let mut foo = v.pop();
-        // println!("pop :?", foo);
-    }
+    v_oth.push(123);
+    v_oth.push(123);
+    v_oth.push(123);
+    v_oth.push(123);
+    v_oth.push(123);
+    let val = v_oth.pop();
+    
 
+    // println!("---{}", val);
+    println!("---{}", v_oth.len());
 
+}
 
-    println!("-------------------");
-    // for i in v {
-    //     println!("vector :{}", i);
-    // }
-    ////为什么在第一次使用所用权遍历后，再使用所有权遍历就不能用了呢？？
-    // println!("-------------------");
-    // for i in v {
-    //     println!("vector :{}", i);
-    // }
-
-    for i in &v {
-        println!("vector :{}", i);
-    }
-
-    //这种不能通过编译了。
-    // let v = vec![1, 2, 3, 4, 5];
-    // for i in v {
-    //     println!("Take ownership of the vector and its element {}", i);
-    // }
-
-    // for i in v {
-    //     println!("Take ownership of the vector and its element {}", i);
-    // }
-
-        
-
+fn fun(arg: i32){
+   
 }

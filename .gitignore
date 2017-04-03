@@ -1,0 +1,13 @@
+/hello_world/src/main.exe
+/hello_world/target/debug/deps/hello_world-bdf2226082209e6d.exe
+/hello_world/target/debug/hello_world.exe
+/Study/cheap.exe
+/Study/ComplexTypes.exe
+/Study/owner_ship.exe
+/Study/OwnerShip.exe
+/Study/ref.exe
+/Study/vector.exe
+/hello_world/src/*.pdb
+/hello_world/target/debug/deps/*.pdb
+/Study/*.pdb
+bin

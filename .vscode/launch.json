@@ -1,11 +1,12 @@
 {
     "version": "0.2.0",
     "configurations": [
+        
         {
             "type": "gdb",
             "request": "launch",
-            "name": "gdb",
-            "target": "./owner_ship.exe",
+            "name": "Launch Program",
+            "target": "./bin/closure_fnMut_fnOnce_fn.exe",
             "cwd": "${workspaceRoot}/Study"
         }
     ]

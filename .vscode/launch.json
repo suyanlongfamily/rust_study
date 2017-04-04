@@ -6,8 +6,8 @@
             "type": "gdb",
             "request": "launch",
             "name": "Launch Program",
-            "target": "./bin/closure_fnMut_fnOnce_fn.exe",
-            "cwd": "${workspaceRoot}/Study"
+            "target": "./bin/generic_option.exe",
+            "cwd": "${workspaceRoot}"
         }
     ]
 }

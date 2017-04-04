@@ -13,10 +13,6 @@ fn main() {
     let ys: [i32; 500] = [0; 500];
     print!("ys arry length{}", ys.len()); //数组有成员函数len(),看来和C 语言室友区别的。在堆中分配。
     println!("array size:{}", mem::size_of_val(&xs));//5 * 4 = 20
-    println!("array size:{}", mem::size_of_val(&ys));//500 * 4 = 2000
-    
-
-
-    
+    println!("array size:{}", mem::size_of_val(&ys));//500 * 4 = 2000   
 }
 

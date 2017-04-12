@@ -9,14 +9,11 @@ struct Student {
 }
 
 // use std::fmt::Debug;
-
 // impl Debug for Student {
 //     fn fmt(&self, &mut Formatter) -> Result{
                                     
 //     }
 // }
-
-
 
 fn main() {
     let stu = Student{name:"suyanlong",old:27,address:"henan"};

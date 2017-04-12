@@ -1,5 +1,5 @@
 fn main() {
-    
+
     let color = "gree";
     let i_val = 2;
     // i_val = 12;
@@ -14,7 +14,7 @@ fn main() {
     println!("{}", fun1(i_val));
     println!("{}", fun1(i_val));
     println!("-------");
-    let colsure_i = |i: i32| {i + 1};
+    let colsure_i = |i: i32| i + 1;
     //下面调用结果也都是一样的。为什么呢？？
     println!("{}", colsure_i(i_val));
     println!("{}", colsure_i(i_val));
@@ -24,7 +24,7 @@ fn main() {
     println!("{}", extern_fun(i_val));
     println!("{}", extern_fun(i_val));
     println!("{}", extern_fun(i_val));
-    
+
     let mut j_val = 1;
     let mut closure_j = |i| i + 1;
     println!("closure_j---{}", closure_j(j_val));
@@ -33,9 +33,9 @@ fn main() {
     //以上都是值copy的形式，原值都是不变的，所以，不管是内部函数还是外部函数，亦或者闭包都是一样的。
     //只是否是拷贝类型、是否引用、是否可变、是否所有权转移、是否生命周期、是否作用域。需要注意的。
     {
-        let  mut  closure_nee = || {
+        let mut closure_nee = || {
             // 闭包是存储上下文环境，同理，如果想对上文进行修改，需要加上mut 关键，
-            j_val += 1;//对上下文进行了修改，所以加mut关键字。
+            j_val += 1; //对上下文进行了修改，所以加mut关键字。
             println!("closure_nee ---{}", j_val);
         };
         closure_nee();
@@ -45,8 +45,8 @@ fn main() {
         // println!("----{}",j_val);
         // let reboo = &mut j_val; 在闭包生命周期内，根据所有权的规则，原对象都无法再使用了。
     } //添加块级作用域就可以了。后面的才能使用闭包使用的值，
-    println!("----{}", j_val);     
-    
+    println!("----{}", j_val);
+
     {
         //使用内部函数
         fn fun_j() {
@@ -54,14 +54,14 @@ fn main() {
             println!("closure_nee ---");
         }
         fun_j();
-        fun_j();        
+        fun_j();
     }
-    println!("----{}", j_val); 
-    
-    
+    println!("----{}", j_val);
+
+
     println!("large seperate -------------------------------------------------");
     //看看引用类型
-    
+
     //  fn function() {
     //     println!("--{}", &color)
     // };
@@ -72,10 +72,24 @@ fn main() {
     // function();
     let print_color = || println!("--{}", color);
     print_color();
-    print_color();     
-    
+    print_color();
+    //---------------move 关键字使用
+    // move 是显示的“移动”的意思，如果是copy类型，就会copy一份，如果不是，移动到作用域内以后，外围就不能再使用了。
+
+    let mut move_val = 32;
+    {
+        let mut closure_move = move |x| {
+            // let mut closure_move = move |x| {
+            println!("--move add before-{}", move_val);
+            move_val += x;
+            println!();
+            println!("--move-add after-{}", move_val);
+        };
+        closure_move(10);
+    }
+    println!("---{}", move_val);//还是原来的值。
 }
 
-fn extern_fun(i: i32) -> i32 {    
+fn extern_fun(i: i32) -> i32 {
     i + 1
 }

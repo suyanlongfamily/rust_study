@@ -1,0 +1,16 @@
+[package]
+name = "json_data"
+version = "0.1.0"
+authors = ["suyanlong <5929238410@qq.com>"]
+
+[dependencies]
+rustc-serialize = "0.3.18"
+
+# 开发模板, 对应`cargo build`命令
+[profile.dev]
+opt-level = 0  # 控制编译器的 --opt-level 参数，也就是优化参数
+debug = true   # 控制编译器是否开启 `-g` 参数
+rpath = false  # 控制编译器的 `-C rpath` 参数
+lto = false    # 控制`-C lto` 参数，此参数影响可执行文件和静态库的生成，
+debug-assertions = true  # 控制调试断言是否开启
+codegen-units = 1 # 控制编译器的 `-C codegen-units` 参数。注意，当`lto = true`时，此字段值被忽略

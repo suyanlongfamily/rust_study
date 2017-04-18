@@ -87,7 +87,7 @@ fn main() {
         };
         closure_move(10);
     }
-    println!("---{}", move_val);//还是原来的值。
+    println!("---{}", move_val); //还是原来的值。
 }
 
 fn extern_fun(i: i32) -> i32 {

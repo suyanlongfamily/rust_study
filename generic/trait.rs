@@ -97,7 +97,7 @@ fn test_fun(arg: &Animal) {
 }
 
 fn main() {
-    //trict 接口 创建对象，而子类型做变量，有意思，有意思。C++面向对象的却不可以！！！
+    //trict 接口 创建对象，而子类型做变量，有意思，有意思。C++面向对象的却不可以！！！不过也是类型推到原因，所以都是编译器自动实现了。
     //延伸一下，rust，怎么实习动态绑定的呢？？？
     // let mut dolly: Sheep = Animal::new("13123"); // dolly 必须显示标注类型。
     let mut dolly: Sheep = Sheep::new("suyanlong name"); // dolly 必须显示标注类型。

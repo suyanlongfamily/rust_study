@@ -58,8 +58,9 @@ mod test {
         list.push(2);
         list.push(3);
 
-        let mut iter = list.into_iter();//这种引用是不是已经转移所有权了。
+        let mut iter = list.into_iter(); //这种引用是不是已经转移所有权了。
         assert_eq!(iter.next(), Some(3));
+        list.pop(); //是否变换了所有权？？？
         assert_eq!(iter.next(), Some(2));
         assert_eq!(iter.next(), Some(1));
     }
@@ -89,4 +90,26 @@ mod test {
     //     assert_eq!(iter.next(), Some(&mut 2));
     //     assert_eq!(iter.next(), Some(&mut 1));
     // }
+}
+
+
+fn main() {
+    let mut list = List::new();
+    list.push(1);
+    list.push(2);
+    list.push(3);
+
+    let mut iter = list.into_iter(); //这种引用是不是已经转移所有权了。
+    // assert_eq!(iter.next(), Some(3));
+    // list.pop(); //是否变换了所有权!!!!报错了！！！看到所有权转移到了迭代器里面了。
+    // assert_eq!(iter.next(), Some(2));
+    // assert_eq!(iter.next(), Some(1));
+
+    //到底是 不可变引用能调用可变的成员函数，这个是错误的！！！！！！！ 想想权限问题，就明白了。
+    //还是   可变的引用能调用不可变的函数。
+    //关于这个成员函数能否调用，思考一下所有权的规则就知道了。！！！！！
+    let iter_ref = &iter;
+    // (*iter_ref).cloned();//引用不能喜欢一所有权，这个一定要明白了！！！！
+    // let iii = *iter_ref;
+    // iii.cloned();
 }

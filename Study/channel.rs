@@ -20,7 +20,7 @@ fn main() {
             // 每个线程都在通道中排队,列出消息
             // （原文：The thread takes ownership over `thread_tx` Each thread queues a message in the channel）
             thread_tx.send(id).unwrap();//子线程发送消息到通道队列里面，仍是生产者-》消费者模型。
-
+            // thread_tx.
             // 发送是一个非阻塞操作，线程将在发送完消息后继续进行
             println!("thread {} finished", id);
         });

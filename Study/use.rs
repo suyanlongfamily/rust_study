@@ -6,7 +6,7 @@ enum Status {
     Poor,
 }
 
-/默认继承关系。 
+//默认继承关系。 
 // #[derive(Debug)]
 enum Work {
     Civilian,

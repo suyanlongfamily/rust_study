@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+        //     "type": "gdb",
+        //     "request": "launch",
+        //     "name": "Launch Program",
+        //     "target": "./target/debug/json_data",
+        //     "cwd": "${workspaceRoot}"
+        // },
+        // {
+        "type": "lldb",
+        "request": "launch",
+        "name": "Debug",
+        "program": "${workspaceRoot}/target/debug/json_data",
+        "args": [],
+        "sourceLanguages": ["rust"],
+        "cwd": "${workspaceRoot}"
+    }]
+}

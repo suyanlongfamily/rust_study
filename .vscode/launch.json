@@ -1,13 +1,13 @@
 {
     "version": "0.2.0",
     "configurations": [
-        
+
         {
             "type": "gdb",
             "request": "launch",
             "name": "Launch Program",
             // "target": "./json_data/target/debug/json_data.exe",
-            "target":"./bin/seconds.exe",
+            "target": "./bin/defer",
             "cwd": "${workspaceRoot}"
         }
     ]

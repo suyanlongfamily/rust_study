@@ -1,14 +1,19 @@
+
+//函数式编程、泛型编程。
 pub struct List<T> {
     head: Link<T>,
 }
 
+//别名定义。
 type Link<T> = Option<Box<Node<T>>>;
 
+//节点。
 struct Node<T> {
     elem: T,
     next: Link<T>,
 }
 
+//结构元组。
 pub struct IntoIter<T>(List<T>);
 
 pub struct Iter<'a, T: 'a> {
@@ -45,7 +50,7 @@ impl<T> List<T> {
                  })
     }
 
-    //返回一个option<&T> 对象
+    //返回一个option<&T> 对象 map成员函数的意义很重要！！！
     pub fn peek(&self) -> Option<&T> {
         self.head.as_ref().map(|node| &node.elem)
     }
@@ -53,9 +58,9 @@ impl<T> List<T> {
     pub fn peek_mut(&mut self) -> Option<&mut T> {
         self.head.as_mut().map(|node| &mut node.elem)
     }
-
+    //转变成迭代器。迭代器里面包裹了对象的所有权。
     pub fn into_iter(self) -> IntoIter<T> {
-        IntoIter(self)//转移所有权了。
+        IntoIter(self) //转移所有权了。返回所有权。
     }
 
     pub fn iter(&self) -> Iter<T> {
@@ -85,9 +90,9 @@ impl<T> Iterator for IntoIter<T> {
     }
 }
 
+//map 映射函数。
 impl<'a, T> Iterator for Iter<'a, T> {
     type Item = &'a T;
-
     fn next(&mut self) -> Option<Self::Item> {
         self.next
             .map(|node| {
@@ -100,7 +105,6 @@ impl<'a, T> Iterator for Iter<'a, T> {
 //通过实现的方式。
 impl<'a, T> Iterator for IterMut<'a, T> {
     type Item = &'a mut T;
-
     fn next(&mut self) -> Option<Self::Item> {
         //map 里面的闭包是要有符合类型的，
         self.next
@@ -111,4 +115,3 @@ impl<'a, T> Iterator for IterMut<'a, T> {
                  })
     }
 }
-

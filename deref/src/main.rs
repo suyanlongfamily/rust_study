@@ -177,20 +177,53 @@ fn main() {
 
     println!("---*&x = {:?}---", *&x); //这里是DerefExample类型 为什么呢？因为 *& 相互抵消了。
     println!("---&*x = {:?}---", &*x); //这里是&char类型,方向自右向左运行，先自调用自定义的deref函数。
-    foo(&*x); //*x 这个返回的值时 char类型，所以需要改成引用，即&char。所以还不如上面的过瘾。明确。
+    foo(&*x); //*x 这个返回的值时 char类型，所以需要改成引用，即&char。所以还不如上面的过瘾、明确。
     foo(&*&x); //与上面的同样的道理，可为什么多了一个&,先相互抵消，在隐式的转换。
+    //-----------这个更垃圾，先引用，在解引用，在引用，都是扯淡啊，不知道会相互抵消吗！！！ 这个foo(&x) 最简单，自动调用自定义的deref方法。
 
     // 总结：1、自定义解引用主要是对引用类型进行隐式的自动转换：如果 U impl Deref<Target = T> 则 &U -> &T 。这个才是重点。
     //      2、对 * 操作符，在拥有者显示的调用时，相当于调用自定义的方法，即对一个*x，先做一次转换变成：*(x.deref())；
     //         所以变成了 T类型，而不是引用类型。
-    //      3、对一个引用类型，对它解引用就会调用默认的
+    //      3、对一个引用类型，会存在这样的一个方法。
     //          impl<'a, T: ?Sized> Deref for &'a T {
     //                  type Target = T;
     //                  fn deref(&self) -> &T { *self }
     //          }
+    //      4、rust 对符号的初衷就是减少复杂，简短的理念,所以才有deref这个结构，
+    //      5、纵观rust语言,引用就是不让持有所有权，甚至减少引用的权限，所以不建议对引用再解引用，所以显示的解引用是不建议的。
+    //      6、rust 里面的引用与C语言的指针，没有什么区别。只是说引用必须有初始值。
+    //      7、
 
-    let str_ref: &char = &x; //这个厉害了，这个才是Deref的真正用法，其他的介绍用法都是扯淡啊。
-
+    let str_ref: &char = &x; //这个厉害了，这个才是Deref的真正用法，动态的转换、隐式的转换类型，其他的介绍用法都是扯淡啊。
+    bar();
 
 }
+
+
+fn bar() {
+    println!("----");
+    let mut val_int = 12;
+    {
+        let val_int_ref = &mut val_int;
+        *val_int_ref = 1212; //这个是对原来的内存进行调整。
+        let mut val_tmp = *val_int_ref; //这一步已经有copy存在了。从新弄了一份拷贝，如果没有所有者没有实现copy，就不能用了。
+        val_tmp = 133;
+    }
+    let ref val_int_ref: &i32 = &val_int;
+    {
+        let ref_val: &i32;
+        ref_val = *val_int_ref; //这个也证明了，只要是一个引用，都有一个deref方法。
+    }
+    let kkk = 12;
+}
+
+
+// #[stable(feature = "rust1", since = "1.0.0")]
+// impl<'b, T: ?Sized> Deref for &'b T {
+//     type Target = T;
+
+//     fn deref(&self) -> &T {
+//         *self
+//     }
+// }
 

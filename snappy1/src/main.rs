@@ -1,6 +1,6 @@
-#![feature(libc)]
-mod snapp1;
-use snapp1::*;
+
+mod snappy;
+use snappy::*;
 fn main() {
     let data = vec![1,2,3,4];
     let undata = compress(&data);

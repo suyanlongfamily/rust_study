@@ -2,38 +2,40 @@
 extern crate libc;
 
 use std::fmt;
-use self::libc::{c_char,c_int,size_t};
+use self::libc::{c_char, c_int, size_t};
 
 const SNAPPY_OK: c_int = 0;
 const SNAPPY_INVALID_INPUT: c_int = 1;
 const SNAPPY_BUFFER_TOO_SMALL: c_int = 2;
-
 #[link(name = "snappy")]
-extern "C" {
-    fn snappy_max_compressed_length(source_length: size_t) -> size_t;
+extern "C"{
+	fn snappy_compress(
+		input: *const c_char,
+		input_len: size_t,
+		compressed: *mut c_char,
+		compressed_len: *mut size_t
+	) -> c_int;
 
-    fn snappy_compress(input: *const c_char,
-                       input_length: size_t,
-                       compressed: *mut c_char,
-                       compressed_length: *mut size_t)
-                       -> c_int;
+	fn snappy_max_compressed_length(source_len: size_t) -> size_t;
 
-    fn snappy_uncompress(compressed: *const c_char,
-                         compressed_length: size_t,
-                         uncompressed: *mut c_char,
-                         uncompressed_length: *mut size_t)
-                         -> c_int;
+	fn snappy_uncompress(
+		compressed: *const c_char,
+		compressed_len: size_t,
+		uncompressed: *mut c_char,
+		uncompressed_len: *mut size_t,
+	) -> c_int;
 
-    fn snappy_uncompressed_length(compressed: *const c_char,
-                                  compressed_length: size_t,
-                                  result: *mut size_t)
-                                  -> c_int;
+	fn snappy_uncompressed_length(
+		compressed: *const c_char,
+		compressed_len: size_t,
+		result: *mut size_t,
+	) -> c_int;
 
-    fn snappy_validate_compressed_buffer(compressed: *const c_char,
-                                         compressed_length: size_t)
-                                         -> c_int;
+	fn snappy_validate_compressed_buffer(
+		compressed: *const c_char,
+		compressed_len: size_t,
+	) -> c_int;
 }
-
 
 /// Attempted to decompress an uncompressed buffer.
 #[derive(Debug)]
@@ -90,12 +92,11 @@ pub fn compress_into(input: &[u8], output: &mut Vec<u8>) -> usize {
 		)
 	};
 
- 	unsafe{
-		output.set_len(len);
-	}
-
 	match status {
-		SNAPPY_OK => len,
+		SNAPPY_OK => unsafe {
+            output.set_len(len);
+            len as usize           
+        },
 		SNAPPY_INVALID_INPUT => panic!("snappy compression has no concept of invalid input"),
 		SNAPPY_BUFFER_TOO_SMALL => panic!("buffer cannot be too small, the capacity was just ensured."),
 		_ => panic!("snappy returned unspecified status"),
@@ -129,7 +130,7 @@ pub fn decompress_into(input: &[u8], output: &mut Vec<u8>) -> Result<usize, Inva
 	};
 
 	match status {
-		SNAPPY_OK => Ok(len as usize),
+		SNAPPY_OK =>  Ok(len as usize),
 		SNAPPY_INVALID_INPUT => Err(InvalidInput),
 		SNAPPY_BUFFER_TOO_SMALL => panic!("buffer cannot be too small, size was just set to large enough."),
 		_ => panic!("snappy returned unspecified status"),

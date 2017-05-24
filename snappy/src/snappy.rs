@@ -118,11 +118,6 @@ pub fn validate_compressed_buffer(input: &[u8]) -> bool {
 
 
 
-
-
-
-
-
 #[cfg(test)]
 mod tests {
     use std::str;
@@ -133,7 +128,7 @@ mod tests {
         let d = vec![0xde, 0xad, 0xd0, 0x0d];
         let c = compress(&d);
         assert!(validate_compressed_buffer(&c));
-        assert!(decompress(&c) == Ok(d));
+        assert!(decompress(&c).unwrap() == d);
     }
 
     #[test]
@@ -150,18 +145,8 @@ mod tests {
         assert!(decompress(&d).is_err());
 
         let c = compress(&d);
+		println!("-----{:?}----",c);
         assert!(validate_compressed_buffer(&c));
-        assert!(decompress(&c) == Ok(d));
-    }
-
-    #[test]
-    fn uncompress_to_appends() {
-        // "This is test"
-        let compressed = &[12, 44, 84, 104, 105, 115, 32, 105, 115, 32, 116, 101, 115, 116];
-
-        let mut out = vec![b'a', b'b', b'c', b'>'];
-        decompress_into(compressed, &mut out).unwrap();
-        let s = str::from_utf8(&out[..]).unwrap();
-        assert_eq!(s, "abc>This is test");
+        assert!(decompress(&c).unwrap() == d);
     }
 }

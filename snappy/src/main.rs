@@ -4,17 +4,24 @@ use snappy::*;
 
 fn main() {
     // let data = vec![12,12,111,32,21,12,120];
-    let data = "123".to_string();
+
+    // let test_data = vec![,"123","123"];
+    // compress(test_data.as_bytes());
+
+    let data = "苏彦龙".to_string();
     println!("---{:?}----",&data);
-    // let com_data = compress(data.as_bytes());
-    // println!("-----compress = {:?}----",com_data);
-    // println!("-----uncompress = {:?}----",decompress(&com_data));
-    // println!("Hello, world!");
+    let com_data = compress(data.as_bytes());
+    println!("-----compress = {:?}----",com_data);
+    println!("-----uncompress = {:?}----",String::from_utf8(decompress(&(com_data)).unwrap()));
+
+    println!("-----------------------------------------------------");
+
+    println!("Hello, world!");
     let d = vec![0xde, 0xad, 0xd0, 0x0d];
     let c = compress(&d);
     let falg = validate_compressed_buffer(&c);
     assert!(validate_compressed_buffer(&c));
-    let str_info = String::from("苏彦龙年后的搜房闹洞房是的覅动手变覅阿斯蒂芬妮萨大富豪");
+    let str_info = String::from("sadf1231sadf年后的搜房闹洞房是的覅动手变覅阿斯蒂芬妮萨大富豪");
     println!("-------str_info = {}---",str_info);
     let str_info_bytes = str_info.as_bytes();
     println!("-------str_info = {:?}---",str_info_bytes);
@@ -22,10 +29,13 @@ fn main() {
     println!("-------str_info_tmp = {:?}---",str_info_tmp);
     //utf-8 字符编码的转换。
     //编码转换技巧是什么。
-    use std::time::{Duration, SystemTime};
 
+
+
+    use std::time::{Duration, SystemTime};
     let now = SystemTime::now();
     println!("-----{:?}----",now.elapsed().unwrap());
+
     // let now1 = SystemTime::now();
     // std::thread::sleep_ms(10);
     println!("-----{:?}----",now.elapsed().unwrap());
@@ -70,8 +80,35 @@ fn main() {
         file
     });
     println!("-----compress data size = {:?}---",(com_file).unwrap().metadata().unwrap().len());
+    // let mut left :u32 = 5;
+    let mut left :u32 = 327685;
+    let after = left >> 16;
+    let after = after << 16;
+    let topic = left - after;
+    // left = left + 5 as u32;
+    println!("---{:?}--",left);
+
+    de_cmd_id(327685);
+    empty();
+}
 
 
+pub fn de_cmd_id(cmd_id:u32)->(u32,u16){
+    let mut submodule = cmd_id >> 16;
+    let sub = submodule;
+    submodule = submodule << 16;
+    let mut topic = (cmd_id - submodule) as u16;
+    (sub,topic)
+}
 
 
+fn empty() {
+    let d = vec![];
+    assert!(!validate_compressed_buffer(&d));
+    assert!(decompress(&d).is_err());
+
+    let c = compress(&d);
+    println!("-----{:?}----",c);
+    assert!(validate_compressed_buffer(&c));
+    assert!(decompress(&c).unwrap() == d);
 }

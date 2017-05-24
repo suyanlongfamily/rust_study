@@ -1,6 +1,4 @@
-#[feature(libc)]
 extern crate libc;
-
 use std::fmt;
 use self::libc::{c_char, c_int, size_t};
 

@@ -1,0 +1,13 @@
+[package]
+name = "snappy"
+version = "0.4.0"
+authors = ["Daniel Micay <danielmicay@gmail.com>", "Jeff Belgum <jeffbelgum@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/JeffBelgum/rust-snappy"
+documentation = "https://docs.rs/snappy/"
+homepage = "https://github.com/JeffBelgum/rust-snappy"
+description = "Rust bindings to the Google compression library 'snappy'"
+
+[dependencies]
+snappy-sys = "*"
+libc = "0.2"

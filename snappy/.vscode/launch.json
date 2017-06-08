@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+
+        "type": "lldb",
+        "request": "launch",
+        "name": "Debug",
+        "program": "${workspaceRoot}/target/debug/snappy_test",
+        "args": [],
+        "sourceLanguages": [
+            "rust"
+        ],
+        "cwd": "${workspaceRoot}"
+    }]
+}

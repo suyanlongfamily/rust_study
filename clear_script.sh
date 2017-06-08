@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
+
 project_dir=$(pwd)
-mv_tmp=$(mkdir -p $project_dir)
-clear_items=("target" "Cargo.lock" "cmake-build-debug" "CMakeLists.txt" ".idea")
+clear_items=("target" "Cargo.lock" "cmake-build-debug" "CMakeLists.txt" ".idea" "*.bk")
+
+echo "clear items = ${clear_items[*]}"
 
 function is_clear(){
     for item in ${clear_items[*]}
     do
-        echo "item = $item"
         if test $1 = $item
         then
+	    echo "true"
             return 1;
         fi;
     done;
@@ -39,11 +41,11 @@ function clear(){
         echo $tmp_item
         is_clear "$item"
         is_ok=$?
-        echo ${is_ok}
+        #echo ${is_ok}
         if test ${is_ok} -eq 1
         then
             echo "mv -f $tmp_item /tmp/"
-            sudo mv -f $tmp_item /tmp/ | rm -rf $tmp_item;
+            sudo mv -f $tmp_item /tmp/ | echo "rm -rf $tmp_item" & rm -rf $tmp_item;
         else
             if test -d $tmp_item
             then

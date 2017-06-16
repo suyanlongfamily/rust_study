@@ -1,0 +1,19 @@
+{
+    "sync-rsync.remote": "syl@192.168.3.142:/home/syl/suyanlong/test_remote",
+    "sync-rsync.local": "/home/suyanlong/diesel_demo",
+    "sync-rsync.shell": "ssh -p 22",
+    "sync-rsync.chmod": "",
+    "sync-rsync.executableShell": "/bin/bash",
+    "sync-rsync.autoHideOutput": false,
+    "sync-rsync.onSave": true,
+    "sync-rsync.exclude": [
+        // 既可以是文件，也可以用通用标识符。
+        ".git",
+        // ".vscode",
+        "target",
+        "migrations",
+        "Cargo.lock",
+        ".idea",
+        "*.bk"
+    ]
+}

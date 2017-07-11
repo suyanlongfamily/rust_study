@@ -1,0 +1,8 @@
+[package]
+name = "studyHyper"
+version = "0.1.0"
+authors = ["suyanlong <592938410@qq.com>"]
+
+[dependencies]
+hyper = "*"
+futures = "*"

@@ -45,3 +45,17 @@ mod tests {
     #[test]
     fn it_works() {}
 }
+
+
+jsonrpc 模块的handle方法。根据业务处理，已经优化了，
+
+
+handler函数,划分几个单元函数:disapproval:
+校验url
+校验rpc参数
+选择对应topic
+校验交易
+处理请求
+处理交易
+最后发送mq并等待mq回应
+

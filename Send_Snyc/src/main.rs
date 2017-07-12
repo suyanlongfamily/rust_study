@@ -1,41 +1,132 @@
 // use std::marker::Send
 use std::thread;
-#[derive(Debug,Copy,Clone)]
+#[derive(Debug, Copy, Clone)]
 struct Name {
     old: u32,
     year: u32,
 }
 
+use std::sync::Arc;
 fn main() {
     println!("Hello, world!");
-    Send_test();
+    // Send_test();
+    let mut box_val = Box::new(121);
+    let box_val_other = box_val;
+    // print!("---{:?}--", box_val);//box 绑定所有权转移。无法在使用了。
+
+    let arc_val = Arc::new(123);
+    let arc_val_other = arc_val;
+    // let arc_val_other = arc_val;这个不能实现，Arc对象的本省是需要遵循所有权系统的。并且不能时Copy trait，但是实现了Clone triat，
+    sync_thread();
+    unsafe_test();
+
+}
+
+fn unsafe_test() {
+    let mut kk;
+    unsafe {
+        kk = 23;
+        let mut kkk = &mut kk;
+        *kkk = 123;
+    }
+
+    println!("---{:?}---", kk);
+}
+
+
+fn sync_thread() {
+
+    let mut count = 11;
+    let handle = thread::spawn(move || loop {
+        println!("-----childen sync_thread--");
+
+        if let Some(0) = Some(count) {
+            return;
+        }
+
+        count = count - 1;
+
+    });
 
 
 }
 
 
-fn Sync_test(){
+fn sync_send<'a>(val: &'a str) -> &'a str {
+    // String
+    let kk = String::from(val);
+    // let kk = "123".to_string();
+    "123"
+}
+
+fn test_string(val: &String) -> &String {
+
+    // let val = String::from("234");
+    &val
+    // "123"
+}
+
+fn Sync_test() {
+    let mut int_val = 1000;
+    let re_int_val = &int_val;
+    println!("---ref_int_val - {}-", int_val);
+    let re_re_int_val = re_int_val; //引用类型时转移所有权吗？？？
+    let refrer = &re_re_int_val;
+    println!("---------{:?}----", refrer);
+    let cloure_ref = || {
+        println!("---------{:?}----", refrer);
+
+    };
+    println!("---------{:?}----", refrer);
+    cloure_ref();
+    //引用看来也是地址了。所以可以复制。copy类型。
+    println!("---ref_int_val - {}-", re_int_val);
+    println!("---ref_int_val - {}-", re_re_int_val);
+
+
+    //-----------------------------------
+
+
+    let mut values1 = 100;
+    let val_ref = &mut values1;
+
+
 
 }
+static mut values: i32 = 1111;
 
 fn Send_test() {
     let mut count = 10;
-    //由于是copy类型，所以move到另一个执行体中，是新的值，与原来的是不是同一个，同时也是Send约定。
+    let mut values_int = 100;
+    let re_val;
+    unsafe {
+        //使用静态类型的引用需要unsafe
+        re_val = &mut values;
+
+
+    }
+    // println!("---main -======--{:?}----", &values);
+
+
+    //由于是copy类型，所以move到另一个执行体中，是新的值，与原来的不是同一个，同时也是Send约定。
     //而没有实现copy类型的，就是转移所有权了。原来的变量就不能再使用了。
     //move 后的变量，要么时转移了所有权，要么copy了值（需要实现copy\clone\等特性）。
     let mut stu = Name { old: 12, year: 32 };
     let handle = thread::spawn(move || loop {
-                                   println!("-----childen thread--");
-                                   if let Some(0) = Some(count) {
-                                       return;
-                                   }
-                                   stu.old = 1233434;
-                                   count = count - 1;
-                               });
+        println!("-----childen thread--");
+        if let Some(0) = Some(count) {
+            return;
+        }
+        stu.old = 1233434;
+        count = count - 1;
+        println!("-----{}", re_val);
+    });
 
     handle.join();
     println!("---main ---{:?}----", count); //不变，
     println!("---main ---{:?}----", stu); //不变，
+    // println!("---main -======--{:?}----", re_val); //不变，
+
 
 }
 
@@ -83,4 +174,4 @@ fn Send_test() {
 // Rust的一大特点是，可以保证“线程安全”。
 // 而且，没有性能损失。更有意思的是，Rust编译器实际上只有Send Sync等基本抽象。
 // 而对“线程” “锁” “同步” 等基本的并行相关的概念一无所知，这些概念都是由库实现的。
-// 这意味着Rust实现并行编程可以有比较好的扩展性，可以很轻松地用库来支持那些常见的并行编程模式。 
+// 这意味着Rust实现并行编程可以有比较好的扩展性，可以很轻松地用库来支持那些常见的并行编程模式。

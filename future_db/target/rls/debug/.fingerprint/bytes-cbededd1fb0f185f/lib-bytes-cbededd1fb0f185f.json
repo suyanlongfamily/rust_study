@@ -1,1 +1,0 @@
-{"rustc":12804419096450162442,"features":"[]","target":13019182402388023967,"profile":14119667493710126711,"deps":[["byteorder v1.1.0",9913898872233098660],["iovec v0.1.0",1029117663430987110]],"local":[{"Precalculated":"0.4.4"}],"rustflags":["--error-format=json","-Zcontinue-parse-after-error","-Zsave-analysis","-Zunstable-options"]}

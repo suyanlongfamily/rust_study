@@ -1,0 +1,11 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "gdb",
+            "request": "launch",
+            "name": "Launch Program",
+            "target": "./target/debug/Send_Snyc",
+            "cwd": "${workspaceRoot}"
+        }
+}

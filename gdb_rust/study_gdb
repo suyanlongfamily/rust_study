@@ -1,0 +1,60 @@
+gdb 调试程序记得root用户,或者sudo 命令.
+
+调试程序
+1 gdb file_name
+
+2 gdb 已经运行,调试还未运行的程序.
+> file file_name
+
+3 正在调试程序,但是程序没有断点,导致无法打断点,怎么办? ctrl + c打断,程序仍然是在调试中.
+
+4 调试正在运行的程序,
+根据进程的id进行调试.
+
+5、调试已运行的程序
+两种方法：
+　　(1)在UNIX下用ps查看正在运行的程序的PID（进程ID），然后用gdb PID格式挂接正在运行的程序。
+　　(2)先用gdb 关联上源代码，并进行gdb，在gdb中用attach命令来挂接进程的PID。并用detach来取消挂接的进程。
+
+
+5 在gdb控制台中运行shell命令
+> shell [shell命令] 例如:> shell ls
+
+6 调试动态库
+
+7 查看制定方法代码
+> list (l) [function]
+
+8 查看程序执行到什么地方?或者说程序在那个断点?
+
+> 可以ctrl + c
+
+9 列举所有的断点
+> info b
+
+10 r/run 程序开始运行
+
+11 step/s 单步执行,
+
+12 next/n 下一步
+
+13 finish 函数返回
+
+14 until/u line_num 运行到指定行
+
+15 continue/c 运行到下一断点,或者执行结束.
+
+16 return num 直接返回当前函数.
+
+17 call fun 在当前指定的位置运行指定的函数.
+
+18 怎么显示上下文信息,比如函数内的变量信息值.自动显示
+> display [val]
+
+19
+
+
+
+
+
+

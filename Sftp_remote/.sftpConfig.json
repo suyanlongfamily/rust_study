@@ -1,0 +1,26 @@
+{
+    "host": "192.168.3.142",
+    "port": 22,
+    "username": "syl",
+    "password": "suyanlong",
+    "protocol": "sftp",
+    "privateKeyPath": null,
+    "passphrase": null,
+    "passive": false,
+    "remotePath": "/home/syl/suyanlong/sftp_test",
+    "uploadOnSave": true,
+    "syncMode": "update",
+    "watcher": {
+        "files": true,
+        "autoUpload": true,
+        "autoDelete": true
+    },
+    "ignore": [
+        // "**/.vscode",
+        "**/.git",
+        "**/.DS_Store",
+        "**/.sftpConfig.json",
+        "**/target",
+        "**/Cargo.lock"
+    ]
+}

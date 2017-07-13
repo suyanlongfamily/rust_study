@@ -1,0 +1,12 @@
+[package]
+name = "futures"
+version = "0.1.0"
+authors = ["suyanlong <592938410@qq.com>"]
+
+[dependencies]
+futures = "0.1.14"
+pretty_env_logger="*"
+hyper="*"
+
+[[bin]]
+name="hello"

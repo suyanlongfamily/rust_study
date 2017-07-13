@@ -1,0 +1,1 @@
+{"rustc":12804419096450162442,"features":"[]","target":8535674456837315278,"profile":14119667493710126711,"deps":[["futures v0.1.14",3827221286407315243]],"local":[{"Precalculated":"0.1.0"}],"rustflags":["--error-format=json","-Zcontinue-parse-after-error","-Zsave-analysis","-Zunstable-options"]}

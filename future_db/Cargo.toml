@@ -1,0 +1,26 @@
+[package]
+name = "future_db"
+version = "0.1.0"
+authors = ["suyanlong <592938410@qq.com>"]
+
+[dependencies]
+# basic dependencies from echo server before
+futures = "0.1"
+tokio-proto = "0.1"
+tokio-service = "0.1"
+
+# our toy HTTP implementation
+tokio-minihttp = { git = "https://github.com/tokio-rs/tokio-minihttp" }
+
+# database support with connection pooling
+r2d2 = "0.7"
+r2d2_postgres = "0.11"
+
+# json
+serde_derive = "1.0"
+serde = "1.0"
+serde_json = "1.0"
+
+# misc support for thread pools, random numbers
+futures-cpupool = "0.1"
+rand = "0.3"

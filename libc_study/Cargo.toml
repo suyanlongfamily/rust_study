@@ -1,0 +1,7 @@
+[package]
+name = "libc_study"
+version = "0.1.0"
+authors = ["suyanlong <592938410@qq.com>"]
+
+[dependencies]
+libc = "0.*"
